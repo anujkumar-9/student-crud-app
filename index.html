@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Student Registration System</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+<nav class="navbar">
+
+<div class="logo">
+<i class="fa-solid fa-graduation-cap"></i>
+Student Registration System
+</div>
+
+<div class="nav-right">
+
+<button class="nav-btn">
+<i class="fa-solid fa-users"></i>
+Students
+</button>
+
+<button class="nav-btn">
+<i class="fa-solid fa-moon"></i>
+Theme
+</button>
+
+</div>
+
+</nav>
+
+<div class="dashboard">
+
+<div class="left-panel">
+
+<div class="card">
+
+<h2>
+<i class="fa-solid fa-user-plus"></i>
+Register Student
+</h2>
+
+<form action="/submit" method="POST">
+
+<input
+type="text"
+name="name"
+placeholder="Full Name"
+required>
+
+<input
+type="email"
+name="email"
+placeholder="Email Address"
+required>
+
+<button type="submit">
+<i class="fa-solid fa-paper-plane"></i>
+Register
+</button>
+
+</form>
+
+</div>
+
+<div class="status-card">
+
+<h3>System Status</h3>
+
+<p>🟢 Backend : Online</p>
+
+<p>🟢 MongoDB : Connected</p>
+
+</div>
+
+</div>
+
+<div class="right-panel">
+
+<div class="top-row">
+
+<div class="counter">
+
+<h3>Total Students</h3>
+
+<h1 id="studentCount">0</h1>
+
+</div>
+
+<div class="search">
+
+<input
+type="text"
+placeholder="Search Student">
+
+</div>
+
+</div>
+
+<div class="table-card">
+
+<h2>
+<i class="fa-solid fa-address-book"></i>
+Registered Students
+</h2>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Name</th>
+
+<th>Email</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody id="studentTable">
+
+<tr>
+
+<td colspan="3">
+
+No Students Loaded
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+<footer>
+
+Built with Flask • MongoDB • Nginx • Google Cloud
+
+</footer>
+<!-- Student Details Modal -->
+<div id="detailsModal" class="modal">
+
+    <div class="modal-content">
+
+        <span class="close" onclick="closeModal()">&times;</span>
+
+        <h2>Student Details</h2>
+	
+	<p><strong>Student ID:</strong> <span id="detailId"></span></p>
+
+        <p><strong>Name:</strong> <span id="detailName"></span></p>
+
+        <p><strong>Email:</strong> <span id="detailEmail"></span></p>
+
+    </div>
+
+</div>
+<script src="js/script.js"></script>
+
+</body>
+
+</html>
