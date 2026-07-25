@@ -4,3 +4,11 @@ __pycache__/
 .env
 .vscode/
 *.log
+# Terraform
+**/.terraform/
+*.tfstate
+*.tfstate.*
+.terraform.lock.hcl
+
+# Terraform plans
+*.tfplan

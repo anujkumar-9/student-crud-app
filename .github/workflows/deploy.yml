@@ -1,0 +1,58 @@
+name: Terraform Deploy
+
+on:
+  push:
+    branches:
+      - dev
+      - qa
+      - prod
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ secrets.GCP_WIF_PROVIDER }}
+          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Select Environment
+        run: |
+          if [[ "${GITHUB_REF_NAME}" == "dev" ]]; then
+            echo "ENV=dev" >> $GITHUB_ENV
+            echo "PROJECT_ID=${{ secrets.GCP_PROJECT_DEV }}" >> $GITHUB_ENV
+          elif [[ "${GITHUB_REF_NAME}" == "qa" ]]; then
+            echo "ENV=qa" >> $GITHUB_ENV
+            echo "PROJECT_ID=${{ secrets.GCP_PROJECT_QA }}" >> $GITHUB_ENV
+          else
+            echo "ENV=prod" >> $GITHUB_ENV
+            echo "PROJECT_ID=${{ secrets.GCP_PROJECT_PROD }}" >> $GITHUB_ENV
+          fi
+
+      - name: Terraform Init
+        working-directory: terraform/environments/${{ env.ENV }}
+        run: terraform init
+
+      - name: Terraform Validate
+        working-directory: terraform/environments/${{ env.ENV }}
+        run: terraform validate
+
+      - name: Terraform Plan
+        working-directory: terraform/environments/${{ env.ENV }}
+        run: terraform plan
+
+      - name: Terraform Apply
+        working-directory: terraform/environments/${{ env.ENV }}
+        run: terraform apply -auto-approve
