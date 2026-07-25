@@ -3,9 +3,12 @@ name: Terraform Deploy
 on:
   push:
     branches:
+      - main
       - dev
       - qa
       - prod
+
+  workflow_dispatch:
 
 permissions:
   contents: read
