@@ -46,7 +46,7 @@ jobs:
 
       - name: Terraform Init
         working-directory: terraform/environments/${{ env.ENV }}
-        run: terraform init
+        run: terraform init -input=false
 
       - name: Terraform Validate
         working-directory: terraform/environments/${{ env.ENV }}
